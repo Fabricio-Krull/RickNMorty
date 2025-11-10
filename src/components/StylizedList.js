@@ -20,11 +20,22 @@ export default function StylizedList({ list, navigation }) {
                     borderRadius: 7
                 }}
                 >
-                    <View>
-                        <Image source={{uri: item.image}} />
-                        <Text >Nome: {item.name}</Text>
-                        <Text >Status: {item.status}</Text>
-                        <Text >Species: {item.species}</Text>
+                    <View style={{
+                        display: 'flex',
+                        flexDirection: 'row'
+                    }}>
+                        <Image source={{uri: item.image}} 
+                            style={{
+                                width: 80,
+                                height: 80,
+                                borderRadius: 10
+                            }}
+                        />
+                        <View style={{ marginLeft: 5 }}>
+                            <Text style={{ marginTop: 5}}>Nome: {item.name}</Text>
+                            <Text >Status: {item.status}</Text>
+                            <Text >Species: {item.species}</Text>
+                        </View>
                     </View>
                 </TouchableHighlight>
                 

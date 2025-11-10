@@ -37,7 +37,14 @@ export default function CharacterDetailScreen({ route }) {
     // Localização Atual (location.name).
     <View>
 
-        <Image source={{uri: data.image}} />
+        <Image source={{uri: data.image}} 
+            style={{
+                width: 240,
+                height: 240,
+                borderRadius: 10,
+                alignSelf: 'center'
+            }}
+        />
         <Text >Nome: {data.name}</Text>
         <Text >Status: {data.status}</Text>
         <Text >Espécie: {data.species}</Text>
