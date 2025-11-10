@@ -1,24 +1,30 @@
-import { FlatList, Text, TouchableHighlight, View } from 'react-native';
+import { FlatList, Text, TouchableHighlight, View, Image } from 'react-native';
 import { useEffect, useState } from 'react';
+import Loading from '../components/Loading.js';
 import axios from 'axios';
-import StylizedList from '../components/StylizedList';
 
-export default function ClassesList({ navigation, route }) {
+export default function CharacterDetailScreen({ route }) {
 
-    const { id: characterId } = route.params;
+    const characterId = route.params.id;
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         axios.get(`https://rickandmortyapi.com/api/character/${characterId}`)
         .then(response => {
-            setData(response.result);
+            setData(response.data);
+            // alert(response.data.name);
         })
         .catch(error => {
             console.log("Error:", error);
-        });
+        })
+        .finally(() => {
+            setLoading(false);
+        })
     }, []);
-
+    if(loading) return <Loading />
   return (
     // A imagem maior.
 
@@ -31,13 +37,13 @@ export default function ClassesList({ navigation, route }) {
     // Localização Atual (location.name).
     <View>
 
-        <Image src={`${data.image}`} />
-        <Text >Nome: {item.name}</Text>
-        <Text >Status: {item.status}</Text>
-        <Text >Espéice: {item.species}</Text>
-        <Text >Gênero: {item.gender}</Text>
-        <Text >Origem: {item.origin.name}</Text>
-        <Text >Localização atual: {item.location.name}</Text>
+        <Image source={{uri: data.image}} />
+        <Text >Nome: {data.name}</Text>
+        <Text >Status: {data.status}</Text>
+        <Text >Espécie: {data.species}</Text>
+        <Text >Gênero: {data.gender}</Text>
+        <Text >Origem: {data.origin?.name}</Text>
+        <Text >Localização atual: {data.location?.name}</Text>
 
     </View>
 

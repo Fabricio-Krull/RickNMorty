@@ -8,11 +8,20 @@ export default function StylizedList({ list, navigation }) {
             data={list}
             renderItem={({ item }) => (
                 
-                <TouchableHighlight onPress={() => {
-                    navigation.navigate("Detail", {id: item.id});
-                }}>
+                <TouchableHighlight
+                onPress={() => {
+                    navigation.navigate("Details", {id: item.id});
+                }}
+                underlayColor={"#8E57F7"}
+                style={{
+                    margin: 15,
+                    padding: 1,
+                    borderWidth: 0.5,
+                    borderRadius: 7
+                }}
+                >
                     <View>
-                        <Image src={`${item.image}`}/>
+                        <Image source={{uri: item.image}} />
                         <Text >Nome: {item.name}</Text>
                         <Text >Status: {item.status}</Text>
                         <Text >Species: {item.species}</Text>

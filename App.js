@@ -1,17 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
 import CharacterListScreen from './src/screens/CharactersListScreen.js';
 import CharacterDetailScreen from './src/screens/CharacterDetailScreen.js';
-import { StyleSheet, Text, View } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-            <Stack.Navigator initialRouteName="List" screenOptions={{ headerShown: false }} >
-              <Stack.Screen name="List" component={CharacterListScreen} options={{animation:'none'}} />
-              <Stack.Screen name="Details" component={CharacterDetailScreen} options={{animation:'none'}} />
-            </Stack.Navigator>
-            <StatusBar hidden={true} />
-        </NavigationContainer>
+      <Stack.Navigator initialRouteName="List">
+        <Stack.Screen name="List" component={CharacterListScreen}/>
+        <Stack.Screen name="Details" component={CharacterDetailScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
