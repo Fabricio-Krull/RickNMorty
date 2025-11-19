@@ -11,18 +11,18 @@ export default function CharacterListScreen({ navigation }) {
 
     const [query, setQuery] = useState("");
 
-    const [page, setPage] = useState(1);
+    // const [page, setPage] = useState(1);
 
-    const [currentPage, setCurrentPage] = useState("");
+    // const [currentPage, setCurrentPage] = useState("");
 
     const [status, setStatus] = useState("");
 
-    const [statusEmoji, setStatusEmoji] = useState("👍");
+    const [statusEmoji, setStatusEmoji] = useState("🤷");
 
-    const nextPage = () => {
-      setPage(page + 1);
-      setCurrentPage(`?page=${page}`);
-    }
+    // const nextPage = () => {
+    //   setPage(page + 1);
+    //   setCurrentPage(`?page=${page}`);
+    // }
 
     const setNewQuery = (search) => {
       if(search.length > 0){
@@ -49,17 +49,17 @@ export default function CharacterListScreen({ navigation }) {
     }
 
     useEffect(() => {
-        axios.get(`https://rickandmortyapi.com/api/character${query}${status}${currentPage}`)
+        axios.get(`https://rickandmortyapi.com/api/character${query}${status}`)
         .then(response => {
-            if(currentPage.length == 0)
-              setData(data => {
-                const map = new Map();
-                [...data, ...response.data.results].forEach(item => map.set(item.id, item));
-                return Array.from(map.values());
-              });
-            else{
+            // if(currentPage.length == 0)
+            //   setData(data => {
+            //     const map = new Map();
+            //     [...data, ...response.data.results].forEach(item => map.set(item.id, item));
+            //     return Array.from(map.values());
+            //   });
+            // else{
               setData(response.data.results);
-            }
+            // }
         })
         .catch(error => {
             console.log("Error:", error);
@@ -67,7 +67,8 @@ export default function CharacterListScreen({ navigation }) {
         .finally(() => {
           setLoading(false);
         })
-    }, [query, status, currentPage]);
+    // }, [query, status, currentPage]);
+    }, [query, status]);
     if(loading) return (
       <View>
         <Loading />
@@ -103,13 +104,13 @@ export default function CharacterListScreen({ navigation }) {
           <Text style={{fontSize: 35}}>{statusEmoji}</Text>
         </TouchableHighlight>
 
-
+{/* 
 
         <TouchableHighlight style={{height: 50, width: 50, borderWidth: 1, borderRadius: 10}}
           onPress={nextPage}
         >
           <Text style={{fontSize: 35}}>+</Text>
-        </TouchableHighlight>
+        </TouchableHighlight> */}
 
       </View>
       <StylizedList navigation={navigation} list={data}/>
