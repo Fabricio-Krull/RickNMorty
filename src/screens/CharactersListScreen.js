@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import StylizedList from '../components/StylizedList';
 import Loading from '../components/Loading.js';
-import { TextInput, TouchableHighlight, View, Text } from 'react-native';
-
-
+import { TextInput, TouchableHighlight, View, Text, Dimensions } from 'react-native';
 export default function CharacterListScreen({ navigation }) {
 
     const [data, setData] = useState([]);
@@ -15,9 +13,16 @@ export default function CharacterListScreen({ navigation }) {
 
     const [page, setPage] = useState(1);
 
+    const [currentPage, setCurrentPage] = useState("");
+
     const [status, setStatus] = useState("");
 
     const [statusEmoji, setStatusEmoji] = useState("👍");
+
+    const nextPage = () => {
+      setPage(page + 1);
+      setCurrentPage(`?page=${page}`);
+    }
 
     const setNewQuery = (search) => {
       if(search.length > 0){
@@ -44,9 +49,17 @@ export default function CharacterListScreen({ navigation }) {
     }
 
     useEffect(() => {
-        axios.get(`https://rickandmortyapi.com/api/character${query}${status}`)
+        axios.get(`https://rickandmortyapi.com/api/character${query}${status}${currentPage}`)
         .then(response => {
-            setData(response.data.results);
+            if(currentPage.length == 0)
+              setData(data => {
+                const map = new Map();
+                [...data, ...response.data.results].forEach(item => map.set(item.id, item));
+                return Array.from(map.values());
+              });
+            else{
+              setData(response.data.results);
+            }
         })
         .catch(error => {
             console.log("Error:", error);
@@ -54,7 +67,7 @@ export default function CharacterListScreen({ navigation }) {
         .finally(() => {
           setLoading(false);
         })
-    }, [query, status]);
+    }, [query, status, currentPage]);
     if(loading) return (
       <View>
         <Loading />
@@ -73,11 +86,11 @@ export default function CharacterListScreen({ navigation }) {
 
   return (
     <View>
-      <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 40}}>
         <TextInput onChangeText={setNewQuery}
         style={{
           height: 50,
-          width: '80%',
+          width: '60%',
           borderColor: '#000000',
           borderWidth: 1,
           borderRadius: 5,
@@ -89,6 +102,15 @@ export default function CharacterListScreen({ navigation }) {
         >
           <Text style={{fontSize: 35}}>{statusEmoji}</Text>
         </TouchableHighlight>
+
+
+
+        <TouchableHighlight style={{height: 50, width: 50, borderWidth: 1, borderRadius: 10}}
+          onPress={nextPage}
+        >
+          <Text style={{fontSize: 35}}>+</Text>
+        </TouchableHighlight>
+
       </View>
       <StylizedList navigation={navigation} list={data}/>
     </View>

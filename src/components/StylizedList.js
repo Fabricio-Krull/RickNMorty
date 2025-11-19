@@ -6,6 +6,9 @@ export default function StylizedList({ list, navigation }) {
     <View >
         <FlatList
             data={list}
+            style={{
+                height: '90%'
+            }}
             renderItem={({ item }) => (
                 
                 <TouchableHighlight
@@ -14,7 +17,7 @@ export default function StylizedList({ list, navigation }) {
                 }}
                 underlayColor={"#8E57F7"}
                 style={{
-                    margin: 15,
+                    margin: 5,
                     padding: 1,
                     borderWidth: 0.5,
                     borderRadius: 7
@@ -41,9 +44,6 @@ export default function StylizedList({ list, navigation }) {
                 
             )}
             contentContainerStyle={{ paddingBottom: 20 }}
-            onEndReached={() => {
-                
-            }}
         />
 
     </View>
