@@ -9,7 +9,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="List">
-        <Stack.Screen name="List" component={CharacterListScreen}/>
+        <Stack.Screen name="List" component={CharacterListScreen} options={{animation:"flip"}}/>
         <Stack.Screen name="Details" component={CharacterDetailScreen}/>
       </Stack.Navigator>
     </NavigationContainer>

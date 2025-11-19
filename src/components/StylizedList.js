@@ -40,7 +40,10 @@ export default function StylizedList({ list, navigation }) {
                 </TouchableHighlight>
                 
             )}
-                contentContainerStyle={{ paddingBottom: 20 }}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            onEndReached={() => {
+                
+            }}
         />
 
     </View>
